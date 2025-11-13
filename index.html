@@ -1,159 +1,196 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zoro Bot - Bots Personalizados</title>
-  <script src="https://kit.fontawesome.com/a81368914c.js" crossorigin="anonymous"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zoro Carioca ⚔️</title>
   <style>
-    /* Estilo base */
     body {
       margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      color: #fff;
-      text-align: center;
-      min-height: 100vh;
+      height: 100vh;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
-      /* Fundo ajustado para não cortar */
-      background: url('background.jpg') no-repeat center center fixed;
-      background-size: cover; /* Mantém a proporção e cobre toda a tela */
-      background-position: center center;
-      overflow: hidden;
-      position: relative;
+      justify-content: center;
+      background-color: #000;
+      color: white;
+      font-family: "Poppins", sans-serif;
     }
 
-    /* Overlay escuro */
-    .overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.6);
+    .card {
+      position: relative;
+      background: #0d0d0d;
+      border-radius: 20px;
+      padding: 30px 25px;
+      width: 300px;
+      box-shadow: 0 0 25px rgba(0, 255, 100, 0.25);
+      text-align: center;
+      transition: transform 0.3s ease;
+      overflow: hidden;
       z-index: 0;
     }
 
-    .content {
-      position: relative;
-      z-index: 1;
-      max-width: 800px;
-      padding: 20px;
+    .card:hover {
+      transform: scale(1.03);
     }
 
-    h1 {
-      font-size: 3em;
-      color: #00ff99;
-      margin-bottom: 20px;
+    /* AURA VERDE BRILHANTE PULSANTE (MANTIDA) */
+    .card::before {
+      content: "";
+      position: absolute;
+      top: -3px;
+      left: -3px;
+      right: -3px;
+      bottom: -3px;
+      border-radius: 22px;
+      background: linear-gradient(120deg, 
+        #00ff88, 
+        transparent, 
+        #00ff88, 
+        transparent, 
+        #00ff88);
+      background-size: 300% 300%;
+      animation: moverAura 4s linear infinite;
+      z-index: -1;
+      filter: blur(6px);
+      opacity: 0.2;
     }
 
-    p {
-      font-size: 1.2em;
-      line-height: 1.6;
-      margin-bottom: 40px;
+    /* EFEITO DE LINHA ALTERNANDO SENTIDOS */
+    .card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 20px;
+      padding: 2px;
+      background: linear-gradient(90deg, 
+        transparent 0%, 
+        transparent 45%, 
+        #00ff88 50%, 
+        #7cfc00 55%, 
+        #00ff88 60%, 
+        transparent 65%, 
+        transparent 100%);
+      background-size: 200% 100%;
+      -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      animation: luzBorda 8s linear infinite;
+      z-index: -1;
+      filter: blur(1px);
+      opacity: 0.9;
     }
 
-    .buttons {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      flex-wrap: wrap;
+    @keyframes moverAura {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
-    .buttons a {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 15px 25px;
-      font-size: 16px;
-      text-decoration: none;
-      color: #fff;
-      border-radius: 10px;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    @keyframes luzBorda {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 200% 0%; }
     }
 
-    .buttons a i {
+    .profile-img {
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 2px solid #00ff88;
+    }
+
+    h2 {
+      color: #00ff88;
+      margin: 0;
       font-size: 20px;
     }
 
-    .whatsapp { background-color: #25D366; }
-    .instagram { background-color: #C13584; }
-    .tiktok { background-color: #010101; }
-
-    .buttons a:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-    }
-
-    footer {
-      margin-top: 50px;
-      font-size: 0.9em;
+    p {
+      font-size: 13px;
       color: #ccc;
+      margin: 10px 0 20px;
+      line-height: 1.4;
     }
 
-    /* Botão de música */
-    #btnMusica {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 95%;
+      padding: 10px 12px;
       border: none;
-      border-radius: 8px;
-      background-color: #00ff99;
-      color: #000;
-      cursor: pointer;
-      transition: 0.3s;
+      border-radius: 10px;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+      margin: 8px auto;
+      transition: 0.2s;
+      font-size: 13px;
     }
 
-    #btnMusica:hover {
+    .btn:hover {
       opacity: 0.8;
+      transform: scale(1.03);
+    }
+
+    .whatsapp {
+  background: rgba(255, 255, 255, 0.1); /* 10% de opacidade */
+  border: 1px solid #00ff0d;
+}
+
+.instagram {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid #00ff0d;
+}
+
+.tiktok {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid #00ff0d;
+}
+
+.canal {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid #00ff0d;
+}
+
+    .btn img {
+      width: 16px;
+      height: 16px;
     }
   </style>
 </head>
 <body>
-  <!-- Overlay -->
-  <div class="overlay"></div>
+  <div class="card">
+    <img src="https://i.imgur.com/IAyBqzj.jpeg" alt="Zoro Carioca" class="profile-img" />
+    <h2>Zoro Carioca ⚔️</h2>
+    <p>Erro 404: paciência não encontrada.</p>
 
-  <div class="content">
-    <h1>Zoro Carioca</h1>
-    <p>Olá! Eu sou o Zoro, desenvolvedor de bots personalizados para WhatsApp.  
-    Meu principal projeto é o <strong>Zoro Bot</strong>, que possui diversos comandos de gerenciamento de grupos, brincadeiras e jogos para aumentar a diversão da galera.  
-    Se você quer um bot sob medida para seu grupo, posso criar algo exclusivo para você!</p>
+    <a href="https://wa.me/5521983016115" class="btn whatsapp">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="WhatsApp" style="filter: invert(1);">
+      WhatsApp
+    </a>
 
-    <div class="buttons">
-      <a class="whatsapp" href="https://wa.me/5521983016115" target="_blank">
-        <i class="fab fa-whatsapp"></i> WhatsApp
-      </a>
-      <a class="instagram" href="https://instagram.com/zorocarioca21" target="_blank">
-        <i class="fab fa-instagram"></i> Instagram
-      </a>
-      <a class="tiktok" href="https://www.tiktok.com/@zoro_carioca21" target="_blank">
-        <i class="fab fa-tiktok"></i> TikTok
-      </a>
-    </div>
+    <a href="https://instagram.com/zorocarioca21" class="btn instagram">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" style="filter: invert(1);">
+      Instagram
+    </a>
 
-    <!-- Botão para tocar música -->
-    <button id="btnMusica">▶️ Tocar Música</button>
+    <a href="https://www.tiktok.com/@zoro_carioca21" class="btn tiktok">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" alt="TikTok" style="filter: invert(1);">
+      TikTok
+    </a>
+
+    <a href="https://whatsapp.com/channel/0029Vaz6hri6buMEbCpaqH1D" class="btn canal">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="Canal" style="filter: invert(1);">
+      Canal no WhatsApp
+    </a>
   </div>
-
-  <footer>© 2025 Zoro Carioca</footer>
-
-  <!-- Música do repositório -->
-  <audio id="musica" loop>
-    <source src="musica.mp3" type="audio/mpeg">
-    Seu navegador não suporta áudio.
-  </audio>
-
-  <script>
-    const btn = document.getElementById('btnMusica');
-    const audio = document.getElementById('musica');
-    btn.addEventListener('click', () => {
-      audio.play();
-      btn.style.display = 'none'; // esconde o botão depois de tocar
-    });
-  </script>
 </body>
 </html>
