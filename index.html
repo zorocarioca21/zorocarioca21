@@ -223,42 +223,19 @@ const BASE_URL = 'https://api.counterapi.dev/v2/zorocarioca21s-team-1699/first-c
 
 async function updateCounter() {
   try {
-    console.log('🔄 Iniciando contador...');
-    
-    // PRIMEIRO: Incrementa o contador (SEM Authorization header)
-    const incrementResponse = await fetch(`${BASE_URL}/up`, {
-      method: 'GET'
-      // REMOVIDO: headers com Authorization
-    });
+    // Incrementa o contador
+    await fetch(`${BASE_URL}/up`, { method: 'GET' });
 
-    console.log('📈 Status do incremento:', incrementResponse.status);
-    
-    if (!incrementResponse.ok) {
-      throw new Error(`Erro ao incrementar: ${incrementResponse.status}`);
-    }
-
-    // SEGUNDO: Busca o valor atualizado (SEM Authorization header)
-    const getResponse = await fetch(BASE_URL, {
-      method: 'GET'
-      // REMOVIDO: headers com Authorization
-    });
-
-    console.log('📊 Status da busca:', getResponse.status);
-    
-    if (!getResponse.ok) {
-      throw new Error(`Erro ao buscar: ${getResponse.status}`);
-    }
-
+    // Busca o valor atualizado
+    const getResponse = await fetch(BASE_URL, { method: 'GET' });
     const data = await getResponse.json();
-    console.log('✅ Dados recebidos:', data);
     
-    // Atualiza na tela
-    document.getElementById('visitorCount').textContent = data.value;
+    // Atualiza na tela - agora mostra o número REAL!
+    document.getElementById('visitorCount').textContent = data.data.value;
     document.getElementById('visitorCount').classList.remove('loading');
 
   } catch (error) {
-    console.error('❌ Erro completo:', error);
-    document.getElementById('visitorCount').textContent = 'erro';
+    document.getElementById('visitorCount').textContent = '---';
     document.getElementById('visitorCount').classList.remove('loading');
   }
 }
@@ -267,5 +244,6 @@ window.addEventListener('load', updateCounter);
 </script>
 </body>
 </html>
+
 
 
