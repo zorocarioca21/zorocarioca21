@@ -141,29 +141,49 @@
     }
 
     .whatsapp {
-  background: rgba(255, 255, 255, 0.1); /* 10% de opacidade */
-  border: 1px solid #00ff0d;
-}
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #00ff0d;
+    }
 
-.instagram {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid #00ff0d;
-}
+    .instagram {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #00ff0d;
+    }
 
-.tiktok {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid #00ff0d;
-}
+    .tiktok {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #00ff0d;
+    }
 
-.canal {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid #00ff0d;
-}
+    .canal {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #00ff0d;
+    }
 
     .btn img {
       width: 16px;
       height: 16px;
     }
+
+    /* 🔽🔽🔽 CSS DO CONTADOR 🔽🔽🔽 */
+    .counter {
+      text-align: center;
+      margin-top: 20px;
+      padding: 8px;
+      font-size: 12px;
+      color: #00ff88;
+      border-top: 1px solid rgba(0, 255, 136, 0.3);
+    }
+
+    .counter span {
+      font-weight: bold;
+      color: white;
+    }
+    
+    .loading {
+      opacity: 0.7;
+    }
+    /* 🔼🔼🔼 FIM DO CSS DO CONTADOR 🔼🔼🔼 */
   </style>
 </head>
 <body>
@@ -191,7 +211,55 @@
       <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="Canal" style="filter: invert(1);">
       Canal no WhatsApp
     </a>
+
+    <!-- 🔽🔽🔽 CONTADOR 🔽🔽🔽 -->
+    <div class="counter">
+      ⚔️ <span id="visitorCount" class="loading">carregando...</span> acessos ao site
+    </div>
+    <!-- 🔼🔼🔼 FIM DO CONTADOR 🔼🔼🔼 -->
   </div>
+
+  <!-- 🔽🔽🔽 JAVASCRIPT DA API 🔽🔽🔽 -->
+  <script>
+    const API_KEY = 'ut_FZsMHe2QNCoOAc5mWni87DMQhxWbxvQzl3SW0QZC';
+    const COUNTER_URL = 'https://api.counterapi.dev/v2/zorocarioca21s-team-1699/first-counter-1699';
+
+    async function updateCounter() {
+      try {
+        // Primeiro incrementa o contador
+        await fetch(COUNTER_URL + '/up', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${API_KEY}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        // Depois busca o valor atualizado
+        const response = await fetch(COUNTER_URL, {
+          headers: {
+            'Authorization': `Bearer ${API_KEY}`
+          }
+        });
+        
+        const data = await response.json();
+        
+        if (data && data.value !== undefined) {
+          document.getElementById('visitorCount').textContent = data.value;
+          document.getElementById('visitorCount').classList.remove('loading');
+        } else {
+          throw new Error('Resposta inválida da API');
+        }
+      } catch (error) {
+        console.error('Erro ao atualizar contador:', error);
+        document.getElementById('visitorCount').textContent = 'alguns';
+        document.getElementById('visitorCount').classList.remove('loading');
+      }
+    }
+
+    // Executa quando a página carrega
+    window.addEventListener('load', updateCounter);
+  </script>
+  <!-- 🔼🔼🔼 FIM DO JAVASCRIPT 🔼🔼🔼 -->
 </body>
 </html>
-
