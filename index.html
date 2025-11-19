@@ -4,6 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Zoro Carioca ⚔️</title>
+  
+  <!-- 🔽🔽🔽 GOOGLE ANALYTICS 🔽🔽🔽 -->
+  <!-- Substitua G-XXXXXXXXXX pelo seu ID do Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X284Y3ZNBS"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  <!-- 🔼🔼🔼 FIM GOOGLE ANALYTICS 🔼🔼🔼 -->
+  
   <style>
     body {
       margin: 0;
@@ -33,7 +45,7 @@
       transform: scale(1.03);
     }
 
-    /* AURA VERDE BRILHANTE PULSANTE (MANTIDA) */
+    /* AURA VERDE BRILHANTE PULSANTE */
     .card::before {
       content: "";
       position: absolute;
@@ -160,6 +172,13 @@
       border: 1px solid #00ff0d;
     }
 
+    .analytics-btn {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid #00ff88;
+      font-size: 11px !important;
+      padding: 8px 10px !important;
+    }
+
     .btn img {
       width: 16px;
       height: 16px;
@@ -182,6 +201,12 @@
     
     .loading {
       opacity: 0.7;
+    }
+    
+    .stats-note {
+      font-size: 10px;
+      color: #888;
+      margin-top: 5px;
     }
     /* 🔼🔼🔼 FIM DO CSS DO CONTADOR 🔼🔼🔼 */
   </style>
@@ -212,34 +237,52 @@
       Canal no WhatsApp
     </a>
 
-    <!-- 🔽🔽🔽 CONTADOR 🔽🔽🔽 -->
+    <!-- 🔽🔽🔽 CONTADOR COM LINK PARA ANALYTICS 🔽🔽🔽 -->
     <div class="counter">
-      ⚔️ <span id="visitorCount" class="loading">carregando...</span> acessos ao site
+      ⚔️ Site monitorado com Google Analytics
+    </div>
+    
+    <a href="https://analytics.google.com/analytics/web/" target="_blank" class="btn analytics-btn">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/googleanalytics.svg" alt="Analytics" style="filter: invert(1);">
+      Ver Estatísticas de Acesso
+    </a>
+    
+    <div class="stats-note">
+      Acesse analytics.google.com para ver dados reais
     </div>
     <!-- 🔼🔼🔼 FIM DO CONTADOR 🔼🔼🔼 -->
   </div>
 
-  <!-- 🔽🔽🔽 JAVASCRIPT DA API 🔽🔽🔽 -->
+  <!-- 🔽🔽🔽 SCRIPT PARA EVENTOS DO GA4 🔽🔽🔽 -->
   <script>
-    // Contador que FUNCIONA com certeza no GitHub Pages
-    function updateCounter() {
-      let visits = localStorage.getItem('siteVisits');
+    // Rastreia clique nos botões
+    document.addEventListener('DOMContentLoaded', function() {
+      const buttons = document.querySelectorAll('.btn');
       
-      if (!visits) {
-        visits = 0;
-      } else {
-        visits = parseInt(visits);
-      }
+      buttons.forEach(button => {
+        button.addEventListener('click', function() {
+          const buttonText = this.textContent.trim();
+          gtag('event', 'button_click', {
+            'event_category': 'engagement',
+            'event_label': buttonText,
+            'value': 1
+          });
+        });
+      });
       
-      visits += 1;
-      localStorage.setItem('siteVisits', visits);
+      // Rastreia tempo na página
+      let startTime = Date.now();
       
-      document.getElementById('visitorCount').textContent = visits;
-      document.getElementById('visitorCount').classList.remove('loading');
-    }
-    
-    window.addEventListener('load', updateCounter);
-    </script>
-  <!-- 🔼🔼🔼 FIM DO JAVASCRIPT 🔼🔼🔼 -->
+      window.addEventListener('beforeunload', function() {
+        const timeSpent = Math.round((Date.now() - startTime) / 1000);
+        gtag('event', 'time_spent', {
+          'event_category': 'engagement',
+          'event_label': 'time_on_page',
+          'value': timeSpent
+        });
+      });
+    });
+  </script>
+  <!-- 🔼🔼🔼 FIM DO SCRIPT 🔼🔼🔼 -->
 </body>
 </html>
