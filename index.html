@@ -230,34 +230,10 @@ async function updateCounter() {
     const getResponse = await fetch(BASE_URL, { method: 'GET' });
     const data = await getResponse.json();
     
-    // MOSTRA TODOS OS DETALHES
-    console.log('=== ESTRUTURA COMPLETA DA API ===');
-    console.log('Tipo:', typeof data);
-    console.log('Keys:', Object.keys(data));
-    console.log('Valores:', data);
-    console.log('Stringify:', JSON.stringify(data, null, 2));
-    console.log('================================');
+    // O número de acessos está em data.up_count!
+    const visitCount = data.data.up_count;
     
-    // Agora tenta encontrar o valor
-    let visitCount = '0';
-    
-    // Verifica todas as possibilidades
-    if (data.value !== undefined) {
-      visitCount = data.value;
-    } else if (data.count !== undefined) {
-      visitCount = data.count;
-    } else if (data.total !== undefined) {
-      visitCount = data.total;
-    } else if (data.visits !== undefined) {
-      visitCount = data.visits;
-    } else if (data.data) {
-      // Se tem data, verifica dentro
-      if (data.data.value !== undefined) visitCount = data.data.value;
-      else if (data.data.count !== undefined) visitCount = data.data.count;
-      else if (data.data.total !== undefined) visitCount = data.data.total;
-    }
-    
-    console.log('🎯 Número final:', visitCount);
+    console.log('✅ Acessos encontrados:', visitCount);
     
     // Atualiza na tela
     document.getElementById('visitorCount').textContent = visitCount;
@@ -274,6 +250,7 @@ window.addEventListener('load', updateCounter);
 </script>
 </body>
 </html>
+
 
 
 
