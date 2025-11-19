@@ -219,7 +219,8 @@
 
   <!-- SCRIPT APENAS COM API -->
   <script>
-const BASE_URL = 'https://api.counterapi.dev/v2/zorocarioca21s-team-1699/first-counter-1699';
+// NOVO CONTADOR - COMEÇA DO ZERO
+const BASE_URL = 'https://api.counterapi.dev/v2/zorocarioca21s-team-1699/contador-site-oficial';
 
 async function updateCounter() {
   try {
@@ -231,17 +232,15 @@ async function updateCounter() {
     const data = await getResponse.json();
     
     // O número de acessos está em data.up_count!
-    const visitCount = data.data.up_count;
-    
-    console.log('✅ Acessos encontrados:', visitCount);
+    const visitCount = data.data ? data.data.up_count : 1;
     
     // Atualiza na tela
     document.getElementById('visitorCount').textContent = visitCount;
     document.getElementById('visitorCount').classList.remove('loading');
 
   } catch (error) {
-    console.error('❌ Erro:', error);
-    document.getElementById('visitorCount').textContent = '---';
+    // Se der erro, mostra 1 (primeiro acesso)
+    document.getElementById('visitorCount').textContent = '1';
     document.getElementById('visitorCount').classList.remove('loading');
   }
 }
@@ -250,6 +249,7 @@ window.addEventListener('load', updateCounter);
 </script>
 </body>
 </html>
+
 
 
 
