@@ -183,16 +183,6 @@
     .loading {
       opacity: 0.7;
     }
-    
-    .counter-updating {
-      animation: pulse 1s infinite;
-    }
-
-    @keyframes pulse {
-      0% { opacity: 1; }
-      50% { opacity: 0.7; }
-      100% { opacity: 1; }
-    }
   </style>
 </head>
 <body>
@@ -227,7 +217,7 @@
     </div>
   </div>
 
-  <!-- SCRIPT COM SUA API COUNTERAPI.DEV -->
+  <!-- SCRIPT APENAS COM API -->
   <script>
     const API_KEY = 'ut_FZsMHe2QNCoOAc5mWni87DMQhxWbxvQzl3SW0QZC';
     const WORKSPACE = 'zorocarioca21s-team-1699';
@@ -235,9 +225,7 @@
 
     async function updateCounter() {
       try {
-        const counterElement = document.getElementById('visitorCount');
-        
-        // Primeiro faz o UP (incrementa)
+        // Incrementa o contador
         const upResponse = await fetch(`https://api.counterapi.dev/v2/${WORKSPACE}/${COUNTER_NAME}/up`, {
           method: 'GET',
           headers: {
@@ -249,7 +237,7 @@
           throw new Error('Erro ao incrementar contador');
         }
 
-        // Depois busca o valor atual
+        // Busca o valor atualizado
         const getResponse = await fetch(`https://api.counterapi.dev/v2/${WORKSPACE}/${COUNTER_NAME}`, {
           method: 'GET',
           headers: {
@@ -263,23 +251,14 @@
 
         const data = await getResponse.json();
         
-        // Animação de atualização
-        counterElement.classList.add('counter-updating');
-        setTimeout(() => {
-          counterElement.textContent = data.value;
-          counterElement.classList.remove('loading', 'counter-updating');
-        }, 500);
+        // Atualiza na tela
+        document.getElementById('visitorCount').textContent = data.value;
+        document.getElementById('visitorCount').classList.remove('loading');
 
       } catch (error) {
         console.error('Erro na API:', error);
-        
-        // Fallback para localStorage
-        let visits = localStorage.getItem('zoroBackupVisits');
-        if (!visits) visits = 0;
-        visits = parseInt(visits) + 1;
-        localStorage.setItem('zoroBackupVisits', visits);
-        
-        document.getElementById('visitorCount').textContent = visits + '+';
+        // Se der erro, mostra "---"
+        document.getElementById('visitorCount').textContent = '---';
         document.getElementById('visitorCount').classList.remove('loading');
       }
     }
