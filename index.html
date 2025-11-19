@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Zoro Carioca ⚔️</title>
   
+  <!-- 🔽🔽🔽 GOOGLE ANALYTICS 🔽🔽🔽 -->
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X284Y3ZNBS"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-X284Y3ZNBS');
+  </script>
+  <!-- 🔼🔼🔼 FIM GOOGLE ANALYTICS 🔼🔼🔼 -->
+  
   <style>
     body {
       margin: 0;
@@ -217,42 +228,34 @@
     </div>
   </div>
 
-  <!-- SCRIPT APENAS COM API -->
+  <!-- SCRIPT DO CONTADOR -->
   <script>
-// NOVO CONTADOR - COMEÇA DO ZERO
-const BASE_URL = 'https://api.counterapi.dev/v2/zorocarioca21s-team-1699/contador-site-oficial';
+    const BASE_URL = 'https://api.counterapi.dev/v2/zorocarioca21s-team-1699/contador-site-oficial';
 
-async function updateCounter() {
-  try {
-    // Incrementa o contador
-    await fetch(`${BASE_URL}/up`, { method: 'GET' });
+    async function updateCounter() {
+      try {
+        // Incrementa o contador
+        await fetch(`${BASE_URL}/up`, { method: 'GET' });
 
-    // Busca o valor atualizado
-    const getResponse = await fetch(BASE_URL, { method: 'GET' });
-    const data = await getResponse.json();
-    
-    // O número de acessos está em data.up_count!
-    const visitCount = data.data ? data.data.up_count : 1;
-    
-    // Atualiza na tela
-    document.getElementById('visitorCount').textContent = visitCount;
-    document.getElementById('visitorCount').classList.remove('loading');
+        // Busca o valor atualizado
+        const getResponse = await fetch(BASE_URL, { method: 'GET' });
+        const data = await getResponse.json();
+        
+        // O número de acessos está em data.up_count!
+        const visitCount = data.data.up_count;
+        
+        // Atualiza na tela
+        document.getElementById('visitorCount').textContent = visitCount;
+        document.getElementById('visitorCount').classList.remove('loading');
 
-  } catch (error) {
-    // Se der erro, mostra 1 (primeiro acesso)
-    document.getElementById('visitorCount').textContent = '1';
-    document.getElementById('visitorCount').classList.remove('loading');
-  }
-}
+      } catch (error) {
+        console.error('❌ Erro:', error);
+        document.getElementById('visitorCount').textContent = '1';
+        document.getElementById('visitorCount').classList.remove('loading');
+      }
+    }
 
-window.addEventListener('load', updateCounter);
-</script>
+    window.addEventListener('load', updateCounter);
+  </script>
 </body>
 </html>
-
-
-
-
-
-
-
