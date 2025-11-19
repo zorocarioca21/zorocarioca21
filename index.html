@@ -221,45 +221,25 @@
 
   <!-- 🔽🔽🔽 JAVASCRIPT DA API 🔽🔽🔽 -->
   <script>
-    const API_KEY = 'ut_FZsMHe2QNCoOAc5mWni87DMQhxWbxvQzl3SW0QZC';
-    const COUNTER_URL = 'https://api.counterapi.dev/v2/zorocarioca21s-team-1699/first-counter-1699';
-
-    async function updateCounter() {
-      try {
-        // Primeiro incrementa o contador
-        await fetch(COUNTER_URL + '/up', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${API_KEY}`,
-            'Content-Type': 'application/json'
-          }
-        });
-
-        // Depois busca o valor atualizado
-        const response = await fetch(COUNTER_URL, {
-          headers: {
-            'Authorization': `Bearer ${API_KEY}`
-          }
-        });
-        
-        const data = await response.json();
-        
-        if (data && data.value !== undefined) {
-          document.getElementById('visitorCount').textContent = data.value;
-          document.getElementById('visitorCount').classList.remove('loading');
-        } else {
-          throw new Error('Resposta inválida da API');
-        }
-      } catch (error) {
-        console.error('Erro ao atualizar contador:', error);
-        document.getElementById('visitorCount').textContent = 'alguns';
-        document.getElementById('visitorCount').classList.remove('loading');
+    // Contador que FUNCIONA com certeza no GitHub Pages
+    function updateCounter() {
+      let visits = localStorage.getItem('siteVisits');
+      
+      if (!visits) {
+        visits = 0;
+      } else {
+        visits = parseInt(visits);
       }
+      
+      visits += 1;
+      localStorage.setItem('siteVisits', visits);
+      
+      document.getElementById('visitorCount').textContent = visits;
+      document.getElementById('visitorCount').classList.remove('loading');
     }
-
-    // Executa quando a página carrega
+    
     window.addEventListener('load', updateCounter);
-  </script>
+    </script>
   <!-- 🔼🔼🔼 FIM DO JAVASCRIPT 🔼🔼🔼 -->
 </body>
 </html>
