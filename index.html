@@ -219,52 +219,50 @@
 
   <!-- SCRIPT APENAS COM API -->
   <script>
-    const API_KEY = 'ut_FZsMHe2QNCoOAc5mWni87DMQhxWbxvQzl3SW0QZC';
-    const WORKSPACE = 'zorocarioca21s-team-1699';
-    const COUNTER_NAME = 'first-counter-1699';
+const API_KEY = 'ut_FZsMHe2QNCoOAc5mWni87DMQhxWbxvQzl3SW0QZC';
+const BASE_URL = 'https://api.counterapi.dev/v2/zorocarioca21s-team-1699/first-counter-1699';
 
-    async function updateCounter() {
-      try {
-        // Incrementa o contador
-        const upResponse = await fetch(`https://api.counterapi.dev/v2/${WORKSPACE}/${COUNTER_NAME}/up`, {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${API_KEY}`
-          }
-        });
-
-        if (!upResponse.ok) {
-          throw new Error('Erro ao incrementar contador');
-        }
-
-        // Busca o valor atualizado
-        const getResponse = await fetch(`https://api.counterapi.dev/v2/${WORKSPACE}/${COUNTER_NAME}`, {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${API_KEY}`
-          }
-        });
-
-        if (!getResponse.ok) {
-          throw new Error('Erro ao buscar valor do contador');
-        }
-
-        const data = await getResponse.json();
-        
-        // Atualiza na tela
-        document.getElementById('visitorCount').textContent = data.value;
-        document.getElementById('visitorCount').classList.remove('loading');
-
-      } catch (error) {
-        console.error('Erro na API:', error);
-        // Se der erro, mostra "---"
-        document.getElementById('visitorCount').textContent = '---';
-        document.getElementById('visitorCount').classList.remove('loading');
+async function updateCounter() {
+  try {
+    // PRIMEIRO: Incrementa o contador (conforme documentação)
+    const incrementResponse = await fetch(`${BASE_URL}/up`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`
       }
+    });
+
+    if (!incrementResponse.ok) {
+      throw new Error('Erro ao incrementar contador');
     }
 
-    // Executa quando a página carrega
-    window.addEventListener('load', updateCounter);
-  </script>
+    // SEGUNDO: Busca o valor atualizado (requisição separada)
+    const getResponse = await fetch(BASE_URL, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`
+      }
+    });
+
+    if (!getResponse.ok) {
+      throw new Error('Erro ao buscar valor do contador');
+    }
+
+    const data = await getResponse.json();
+    
+    // Atualiza na tela
+    document.getElementById('visitorCount').textContent = data.value;
+    document.getElementById('visitorCount').classList.remove('loading');
+
+  } catch (error) {
+    console.error('Erro na API:', error);
+    document.getElementById('visitorCount').textContent = '---';
+    document.getElementById('visitorCount').classList.remove('loading');
+  }
+}
+
+window.addEventListener('load', updateCounter);
+</script>
 </body>
 </html>
+
