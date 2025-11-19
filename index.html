@@ -230,11 +230,38 @@ async function updateCounter() {
     const getResponse = await fetch(BASE_URL, { method: 'GET' });
     const data = await getResponse.json();
     
-    // Atualiza na tela - agora mostra o número REAL!
-    document.getElementById('visitorCount').textContent = data.data.value;
+    // DEBUG: Mostra no console o que veio
+    console.log('🔍 RESPOSTA DA API:', data);
+    
+    // Tenta encontrar o valor do contador em diferentes locais
+    let visitCount = '0';
+    
+    if (data.value !== undefined) {
+      visitCount = data.value;
+      console.log('✅ Encontrado em: data.value');
+    } else if (data.data && data.data.value !== undefined) {
+      visitCount = data.data.value;
+      console.log('✅ Encontrado em: data.data.value');
+    } else if (data.count !== undefined) {
+      visitCount = data.count;
+      console.log('✅ Encontrado em: data.count');
+    } else if (data.data && data.data.count !== undefined) {
+      visitCount = data.data.count;
+      console.log('✅ Encontrado em: data.data.count');
+    } else {
+      // Se não encontrar, mostra a estrutura completa para debug
+      console.log('❌ Estrutura não reconhecida, mostrando tudo:', data);
+      visitCount = 'erro';
+    }
+    
+    console.log('🎯 Número encontrado:', visitCount);
+    
+    // Atualiza na tela
+    document.getElementById('visitorCount').textContent = visitCount;
     document.getElementById('visitorCount').classList.remove('loading');
 
   } catch (error) {
+    console.error('❌ Erro na API:', error);
     document.getElementById('visitorCount').textContent = '---';
     document.getElementById('visitorCount').classList.remove('loading');
   }
@@ -244,6 +271,7 @@ window.addEventListener('load', updateCounter);
 </script>
 </body>
 </html>
+
 
 
 
