@@ -9,7 +9,7 @@ Desenvolvedor focado em automações, bots inteligentes e soluções práticas, 
 - 🤖 **Especialidade:** Criação e arquitetura de bots escaláveis para WhatsApp (Zapo-js / Baileys).
 - 🧠 **AI-Driven:** Desenvolvimento acelerado com IA em engenharia de prompt, automação e código ágil.
 - ⚙️ **Foco Atual:** Automação de processos, extração de dados (scraping) e integração de APIs.
-- 🛠️ **Stack Principal:** Node.js, JavaScript, SQLite, WebSockets, REST APIs.
+- 🛠️ **Stack Principal:** Node.js, JavaScript, SQLite, REST APIs.
 
 ---
 
@@ -29,10 +29,13 @@ Desenvolvedor focado em automações, bots inteligentes e soluções práticas, 
 
 ### 📊 Estatísticas no GitHub
 
-<div align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=zorocarioca21&show_icons=true&theme=tokyonight&hide_border=true&count_private=true" alt="Estatísticas do GitHub" height="155"/>
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=zorocarioca21&layout=compact&theme=tokyonight&hide_border=true&count_private=true" alt="Linguagens mais usadas" height="155"/>
-</div>
+<p align="center">
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=zorocarioca21&theme=tokyonight" alt="Visão Geral do Perfil" />
+</p>
+<p align="center">
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=zorocarioca21&theme=tokyonight" alt="Repositórios por Linguagem" />
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=zorocarioca21&theme=tokyonight" alt="Linguagens com mais Commits" />
+</p>
 
 <div align="center">
   <br/>
